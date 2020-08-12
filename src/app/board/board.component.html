@@ -1,0 +1,12 @@
+<div fxLayoutAlign="center center" fxFlexFill>
+    <div *ngIf="showBoard">
+        <div class="board" *ngFor="let row of boardArray;let i=index">
+            <app-cell *ngFor="let col of boardArray;let j=index" [row]="i" [col]="j" [cellId]="i+''+j"
+                (click)="cellClicked(i+''+j)">
+            </app-cell>
+        </div>
+    </div>
+    <div *ngIf="!showBoard && errMsg">
+        {{errMsg}}
+    </div>
+</div>
