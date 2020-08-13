@@ -13,6 +13,7 @@ export class BoardComponent implements OnInit {
     boardArray: Array<number> = Array(this.boardSize).fill(0);
     board: Array<any> = [];
     showBoard: boolean = false;
+    disableCells: boolean;
 
     move: string;
     opponentMove: string;
@@ -22,8 +23,14 @@ export class BoardComponent implements OnInit {
     constructor(private webSocketService: WebSocketService) { }
 
     ngOnInit() {
+        this.sendBoardSize();
         this.getPlayer();
         this.listenOpponentCellClick();
+        this.disableCells = false;
+    }
+
+    sendBoardSize(): void {
+        this.webSocketService.emit('boardSize', this.boardSize);
     }
 
     getPlayer(): void {
@@ -42,13 +49,21 @@ export class BoardComponent implements OnInit {
     }
 
     cellClicked(cellId: string) {
-        document.getElementById(cellId).innerHTML = this.move;
-        this.webSocketService.emit('cellClicked', { cellId });
+        console.log(`cell clicked!: ${cellId}`)
+        if (!this.disableCells) {
+            document.getElementById(cellId).innerHTML = this.move;
+            this.disableCells = true;
+            this.webSocketService.emit('cellClicked', { cellId });
+        }
+        else {
+            console.log('cell clicks disabled till opponent makes his move!');
+        }
     }
 
     listenOpponentCellClick() {
         this.webSocketService.listen('cellClicked').subscribe(data => {
             document.getElementById(data['cellId']).innerHTML = this.opponentMove;
+            this.disableCells = false;
         });
     }
 }
