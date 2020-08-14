@@ -26,11 +26,20 @@ export class BoardComponent implements OnInit {
         this.sendBoardSize();
         this.getPlayer();
         this.listenOpponentCellClick();
+        this.listenGameResultEvent();
         this.disableCells = false;
     }
 
     sendBoardSize(): void {
         this.webSocketService.emit('boardSize', this.boardSize);
+    }
+
+    listenGameResultEvent(): void {
+        this.webSocketService.listen('gameResult').subscribe((data: string) => {
+            this.showBoard = false;
+            this.errMsg = data;
+            console.log(`Game Result: ${this.errMsg}`);
+         });
     }
 
     getPlayer(): void {
@@ -49,11 +58,10 @@ export class BoardComponent implements OnInit {
     }
 
     cellClicked(cellId: string) {
-        console.log(`cell clicked!: ${cellId}`)
         if (!this.disableCells) {
             document.getElementById(cellId).innerHTML = this.move;
             this.disableCells = true;
-            this.webSocketService.emit('cellClicked', { cellId });
+            this.webSocketService.emit('cellClicked', { move: this.move, cellId });
         }
         else {
             console.log('cell clicks disabled till opponent makes his move!');
