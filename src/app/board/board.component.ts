@@ -36,10 +36,31 @@ export class BoardComponent implements OnInit {
 
     listenGameResultEvent(): void {
         this.webSocketService.listen('gameResult').subscribe((data: string) => {
-            this.showBoard = false;
-            this.errMsg = data;
-            console.log(`Game Result: ${this.errMsg}`);
-         });
+            this.disableCells = true;
+            if (data['winningCombination']) {
+                let winningCells = data['winningCombination'];
+                let color;
+                let message;
+                console.log(`Data: ${JSON.stringify(data)}`);
+                if (data['status'] === 1) {
+                    color = 'green';
+                    message = 'You Win!';
+                } else if (data['status'] === -1) {
+                    color = 'firebrick';
+                    message = 'You Loose!';
+                }
+                for (let i = 0; i < winningCells.length; i++) {
+                    document.getElementById(winningCells[i]).style.background = color;
+                }
+                alert(message);
+            }
+            else {
+                for (let i = 0; i < (this.boardSize * this.boardSize); i++) {
+                    document.getElementById('' + i).style.background = 'grey';
+                }
+                alert('Tied!');
+            }
+        });
     }
 
     getPlayer(): void {
@@ -62,9 +83,6 @@ export class BoardComponent implements OnInit {
             document.getElementById(cellId).innerHTML = this.move;
             this.disableCells = true;
             this.webSocketService.emit('cellClicked', { move: this.move, cellId });
-        }
-        else {
-            console.log('cell clicks disabled till opponent makes his move!');
         }
     }
 
