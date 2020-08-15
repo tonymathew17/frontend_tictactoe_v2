@@ -1,27 +1,18 @@
-# FrontendTictactoeV2
+# TicTacToe - Multiplayer
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.5.
+An application that lets you play TicTacToe with friends!
+## Dependancies  
+NodeJs(v12.18.3) Click [here](https://nodejs.org/en/download/) to install NodeJs    
+Angular(v10.0.5) Once NodeJs is installed, open command prompt and execute ```npm install -g @angular/cli```
 
-## Development server
+## Installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Clone [backend_tictactoe_v2](https://github.com/tonymathew17/backend_tictactoe_v2.git), [frontend_tictactoe_v2](https://github.com/tonymathew17/frontend_tictactoe_v2.git).  
+Execute ```npm install``` in each of the cloned directory
 
-## Code scaffolding
+## Usage
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Inside  backend_tictactoe_v2 directory, open cmd and run ```npm start```   
+Inside  frontend_tictactoe_v2 directory, open cmd and run ```ng serve```  
+  
+Open ```localhost:4200``` in two tabs to start the game!
